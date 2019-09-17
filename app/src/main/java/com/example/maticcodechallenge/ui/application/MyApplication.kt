@@ -1,6 +1,7 @@
 package com.example.maticcodechallenge.ui.application
 
 import android.app.Application
+import com.example.maticcodechallenge.ui.viewmodel.RepositoryViewModelFactory
 import data.source.RepositoryDataFactory
 import data.source.RepositoryDataSource
 import network.api.RepositoryAPI
@@ -16,6 +17,7 @@ class MyApplication : Application(), KodeinAware {
     //Setup Dependency Injection
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MyApplication))
+        bind() from provider { RepositoryViewModelFactory(instance()) }
         bind() from provider { RepositoryDataFactory(instance()) }
         bind() from provider { RepositoryDataSource(instance()) }
         bind() from provider { RepositoryAPI() }
